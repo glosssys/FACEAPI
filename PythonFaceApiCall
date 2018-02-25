@@ -1,0 +1,49 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Sun Feb 25 00:39:09 2018
+for python3.6
+
+@author: ww
+"""
+import httplib, urllib, base64
+
+
+params = urllib.urlencode({
+
+     # Request parameters
+    'returnFaceId': 'false',
+    'returnFaceLandmarks': 'false',
+    'returnFaceAttributes': 'age,gender,emotion',
+}) 
+
+    #specify image from file
+
+    #For a local image, Content-Type should be application/octet-stream or multipart/form-data AND JSON SHOULD BE EMPTY
+headers = {
+
+        'Content-type': 'application/octet-stream',
+        'Ocp-Apim-Subscription-Key': '[subscription key]',
+
+    }
+
+body = "" 
+
+    #load image
+filename = 'D:/temp/uk/2017-UK-LIBDEM-02.png'
+f = open(filename, "rb")
+
+body = f.read()
+
+f.close()
+
+conn = httplib.HTTPSConnection('westcentralus.api.cognitive.microsoft.com')
+
+conn.request("POST", "/face/v1.0/detect?%s" %params, body, headers)
+
+response = conn.getresponse("")
+
+data = response.read()
+
+print(data)
+
+conn.close()
