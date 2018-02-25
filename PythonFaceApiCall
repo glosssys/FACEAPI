@@ -13,7 +13,7 @@ params = urllib.urlencode({
      # Request parameters
     'returnFaceId': 'false',
     'returnFaceLandmarks': 'false',
-    'returnFaceAttributes': 'age,gender,emotion',
+    'returnFaceAttributes': '[options]',
 }) 
 
     #specify image from file
@@ -29,7 +29,7 @@ headers = {
 body = "" 
 
     #load image
-filename = 'D:/temp/uk/2017-UK-LIBDEM-02.png'
+filename = '[file path]'
 f = open(filename, "rb")
 
 body = f.read()
