@@ -1,0 +1,38 @@
+#===note===
+#based on https://www.stoltzmaniac.com/microsoft-cognitive-services-vision-api-in-r/
+#https://westus.dev.cognitive.microsoft.com/docs/services/563879b61984550e40cbbe8d/operations/563879b61984550f30395236
+
+# ==== Load required libraries ====
+library(httr)
+library(RCurl)
+# ==== Microsoft's Azure Face API ====
+image_url = '[image url]'
+api_endpoint_url="https://westcentralus.api.cognitive.microsoft.com/face/v1.0/detect"
+api_key="[key here]"
+Faceid="true"
+FaceLandmarks="false"
+faceAttributes = "emotion"
+
+#options= age, gender, headPose, smile, facialHair,
+#glasses, emotion, hair, makeup, occlusion, accessories, blur, 
+#exposure and noise
+
+
+
+
+reqURL = paste(api_endpoint_url,
+               "?returnFaceid=",
+               Faceid,
+               "&returnFaceLandmarks=",
+               FaceLandmarks,
+               "&returnFaceAttributes=",
+               faceAttributes,
+               sep="")
+
+APIresponse = POST(url = reqURL,
+                   content_type('application/json'),
+                   add_headers(.headers = c('Ocp-Apim-Subscription-Key' = api_key)),
+                   body=list(url = image_url),
+                   encode = "json") 
+
+df = content(APIresponse)
